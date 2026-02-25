@@ -50,31 +50,64 @@ body {
 
 .app-shell {
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: 1fr auto;
   min-height: 100vh;
 }
 
-.app-header {
-  position: sticky;
+.app-menu-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 70;
+  border: 1px solid var(--ms-border-bright);
+  background: rgb(11 15 26 / 95%);
+  color: var(--ms-gold-bright);
+  font-family: var(--ms-display);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  font-size: 0.62rem;
+  padding: 8px 12px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.app-menu-panel {
+  position: fixed;
   top: 0;
-  z-index: 50;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 12px 24px;
+  right: 0;
+  bottom: 0;
+  width: min(280px, 80vw);
+  z-index: 65;
+  transform: translateX(100%);
+  transition: transform 0.2s ease;
   background: var(--ms-bg-deep);
-  border-bottom: 1px solid var(--ms-border);
-  box-shadow: 0 2px 20px rgb(0 0 0 / 45%);
+  border-left: 1px solid var(--ms-border);
+  box-shadow: -10px 0 30px rgb(0 0 0 / 50%);
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.app-menu-panel.open {
+  transform: translateX(0);
+}
+
+.app-menu-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  border: 0;
+  background: rgb(0 0 0 / 45%);
 }
 
 .app-brand {
   display: flex;
-  align-items: baseline;
-  gap: 10px;
+  flex-direction: column;
+  gap: 4px;
 }
 
-.app-header h1 {
+.app-brand h1 {
   margin: 0;
   font-family: var(--ms-display);
   font-size: 1rem;
@@ -94,15 +127,14 @@ body {
 .nav-links {
   list-style: none;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
+  flex-direction: column;
   gap: 10px;
   margin: 0;
   padding: 0;
 }
 
 .nav-links a {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   min-height: 32px;
   padding: 0 10px;
@@ -132,7 +164,7 @@ body {
 .app-main {
   width: min(1800px, 100%);
   margin: 0 auto;
-  padding: 20px;
+  padding: 68px 20px 20px;
 }
 
 .app-main > section {
@@ -169,18 +201,12 @@ body {
 }
 
 @media (max-width: 900px) {
-  .app-header {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 12px 14px;
-  }
-
-  .nav-links {
-    width: 100%;
-    justify-content: flex-start;
+  .app-menu-toggle {
+    top: 10px;
+    right: 10px;
   }
 
   .app-main {
-    padding: 14px;
+    padding: 56px 14px 14px;
   }
 }
