@@ -2,6 +2,9 @@
 
 .ms-page-shell {
   width: 100%;
+  margin-top: -68px;
+  margin-left: -20px;
+  margin-right: -20px;
 }
 
 .ms-app {
@@ -12,7 +15,7 @@
 
 .ms-header {
   background: var(--ms-bg-deep);
-  border-bottom: 1px solid var(--ms-border);
+  border: 1px solid var(--ms-border);
   padding: 0 24px;
   display: flex;
   align-items: center;
@@ -31,7 +34,7 @@
 .ms-logo-icon {
   width: 28px;
   height: 28px;
-  border: 2px solid var(--ms-gold);
+  border: 2px solid var(--ms-red);
   transform: rotate(45deg);
 }
 
@@ -39,7 +42,7 @@
   content: '';
   width: 8px;
   height: 8px;
-  background: var(--ms-gold);
+  background: var(--ms-red);
   display: block;
   margin: 8px;
 }
@@ -102,17 +105,12 @@
   font-family: var(--ms-display);
 }
 
-.ms-label-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-
 .ms-optional {
-  font-size: 8px;
+  font-size: 9px;
   opacity: 0.5;
-  font-family: var(--ms-body);
-  letter-spacing: 0;
+  font-family: var(--ms-display);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
 }
 
 .ms-app select,
@@ -227,10 +225,18 @@
 }
 
 .ms-main {
-  padding: 24px;
+  padding: 24px 0 0;
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .ms-page-shell {
+    margin-top: -56px;
+    margin-left: -14px;
+    margin-right: -14px;
+  }
 }
 
 .ms-panel {
