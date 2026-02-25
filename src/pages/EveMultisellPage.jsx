@@ -181,9 +181,9 @@ export default function EveMultisellPage() {
   const [sortCol, setSortCol] = useState('name');
   const [sortDir, setSortDir] = useState(1);
   const [settings, setSettings] = useState({
-    undercutTicks: 2,
+    undercutTicks: 1,
     markupPct: 25,
-    gapThreshold: 10,
+    gapThreshold: 5,
     buyBuffer: 3,
   });
 
@@ -306,7 +306,7 @@ export default function EveMultisellPage() {
           const floor = market.highestBuy * (1 + settings.buyBuffer / 100);
           if (newPrice <= market.highestBuy) {
             newPrice = floor + tick;
-            result.flags.push({ type: 'err', text: '⚠ Buy Floor' });
+            result.flags.push({ type: 'err', text: 'Buy Floor' });
           } else if (newPrice < floor) {
             newPrice = floor + tick;
             result.flags.push({ type: 'warn', text: 'Near Buy' });
@@ -342,8 +342,9 @@ export default function EveMultisellPage() {
           const stale = age2 !== null && age2 > GAP_AGE_CUTOFF_DAYS;
           if (!stale) {
             const gap = market.secondLowest - market.lowestSell;
-            if (gap > settings.gapThreshold * tick) {
-              result.flags.push({ type: 'warn', text: `Gap ×${Math.round(gap / tick)}` });
+            const gapPct = (gap / market.lowestSell) * 100;
+            if (gapPct > settings.gapThreshold) {
+              result.flags.push({ type: 'warn', text: `Gap ${gapPct.toFixed(1)}%` });
             }
           }
         }
@@ -356,6 +357,14 @@ export default function EveMultisellPage() {
     }
 
     setIsFetching(false);
+  }
+
+  function clearExport() {
+    setInputText('');
+    setResults([]);
+    setIsFetching(false);
+    setFetchIndex(0);
+    setFetchingName('');
   }
 
   function resetApp() {
@@ -426,8 +435,9 @@ export default function EveMultisellPage() {
           <div className="ms-sep" />
 
           <div className="ms-buyfrom-wrap">
-            <span className="ms-label">
-              Bought From <span className="ms-optional">(optional)</span>
+            <span className="ms-label ms-label-stack">
+              Bought From
+              <span className="ms-optional">(optional)</span>
             </span>
             <select
               className={buyFromStationId ? 'active' : ''}
@@ -445,7 +455,7 @@ export default function EveMultisellPage() {
 
           <div className="ms-header-actions">
             <button type="button" className="ms-btn ms-btn-ghost" onClick={resetApp}>
-              ↺ Reset
+              Reset
             </button>
             <button
               type="button"
@@ -453,10 +463,10 @@ export default function EveMultisellPage() {
               onClick={() => setShowSettings((prev) => !prev)}
               style={showSettings ? { color: 'var(--ms-gold)' } : undefined}
             >
-              ⚙ Settings
+              Settings
             </button>
             <button type="button" className="ms-btn ms-btn-primary" disabled={!canFetch} onClick={fetchAllPrices}>
-              ▶ Fetch Prices
+              Fetch Prices
             </button>
           </div>
         </header>
@@ -471,7 +481,7 @@ export default function EveMultisellPage() {
                 max="20"
                 value={settings.undercutTicks}
                 onChange={(event) =>
-                  setSettings((prev) => ({ ...prev, undercutTicks: parseInt(event.target.value || '2', 10) }))
+                  setSettings((prev) => ({ ...prev, undercutTicks: parseInt(event.target.value || '1', 10) }))
                 }
               />
             </div>
@@ -495,14 +505,14 @@ export default function EveMultisellPage() {
             <div className="ms-sep ms-sep-small" />
 
             <div className="ms-setting-item">
-              <span className="ms-setting-label">Gap Threshold</span>
+              <span className="ms-setting-label">Gap Threshold %</span>
               <input
                 type="number"
                 min="1"
                 max="100"
                 value={settings.gapThreshold}
                 onChange={(event) =>
-                  setSettings((prev) => ({ ...prev, gapThreshold: parseInt(event.target.value || '10', 10) }))
+                  setSettings((prev) => ({ ...prev, gapThreshold: parseInt(event.target.value || '5', 10) }))
                 }
               />
             </div>
@@ -563,8 +573,8 @@ export default function EveMultisellPage() {
                     : 'No valid items found — check format'}
               </div>
 
-              <button type="button" className="ms-btn ms-btn-ghost" onClick={resetApp}>
-                ✕ Clear
+              <button type="button" className="ms-btn ms-btn-ghost" onClick={clearExport}>
+                Clear
               </button>
             </div>
           </div>
@@ -614,7 +624,7 @@ export default function EveMultisellPage() {
                 )}
 
                 <button type="button" className="ms-btn ms-btn-ghost" onClick={fetchAllPrices} disabled={!canFetch}>
-                  ↺ Re-fetch
+                  Re-fetch
                 </button>
               </div>
 
@@ -698,7 +708,7 @@ export default function EveMultisellPage() {
                           </td>
                           <td className="ms-td-center">
                             {!row.flags.length ? (
-                              <span className="ms-flag ms-flag-ok">✓ OK</span>
+                              <span className="ms-flag ms-flag-ok">OK</span>
                             ) : (
                               row.flags.map((flag) => (
                                 <span key={`${row.id}-${flag.type}-${flag.text}`} className={`ms-flag ms-flag-${flag.type}`}>
@@ -728,14 +738,14 @@ export default function EveMultisellPage() {
                   {stats.skipped ? ` · ${stats.skipped} skipped (no data)` : ''}
                 </span>
                 <button type="button" className="ms-btn ms-btn-success" onClick={copyAll}>
-                  ⎘ Copy All
+                  Copy All
                 </button>
               </div>
             </div>
           )}
         </div>
 
-        {showToast && <div className="ms-toast">✓ Copied to clipboard!</div>}
+        {showToast && <div className="ms-toast">Copied to clipboard.</div>}
       </div>
     </div>
   );

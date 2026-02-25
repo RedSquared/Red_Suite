@@ -1,9 +1,27 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { NavLink, Outlet, useLocation } from 'react-router-dom';
 
 export default function AppLayout() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname]);
+
   return (
     <div className="app-shell">
-      <header className="app-header">
+      <button
+        type="button"
+        className="app-menu-toggle"
+        onClick={() => setMenuOpen((prev) => !prev)}
+        aria-expanded={menuOpen}
+        aria-label="Toggle navigation menu"
+      >
+        Menu
+      </button>
+
+      <aside className={`app-menu-panel ${menuOpen ? 'open' : ''}`}>
         <div className="app-brand">
           <h1>Red Suite</h1>
           <span className="app-brand-sub">EVE Utility Terminal</span>
@@ -23,7 +41,10 @@ export default function AppLayout() {
             </li>
           </ul>
         </nav>
-      </header>
+      </aside>
+
+      {menuOpen && <button type="button" className="app-menu-backdrop" onClick={() => setMenuOpen(false)} aria-label="Close navigation menu" />}
+
       <main className="app-main">
         <Outlet />
       </main>
