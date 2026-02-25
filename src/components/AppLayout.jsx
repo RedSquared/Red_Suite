@@ -4,7 +4,10 @@ export default function AppLayout() {
   return (
     <div className="app-shell">
       <header className="app-header">
-        <h1>Red Suite</h1>
+        <div className="app-brand">
+          <h1>Red Suite</h1>
+          <span className="app-brand-sub">EVE Utility Terminal</span>
+        </div>
         <nav>
           <ul className="nav-links">
             <li>
@@ -24,7 +27,7 @@ export default function AppLayout() {
       <main className="app-main">
         <Outlet />
       </main>
-      <footer className="app-footer">Built with Vite + React Router</footer>
+      <footer className="app-footer">Built by RedSquared · Powered by React + Vite</footer>
     </div>
   );
 }

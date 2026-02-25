@@ -1,9 +1,33 @@
 @import './styles/tokens.css';
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Share+Tech+Mono&family=Exo+2:wght@300;400;500;600&display=swap');
 
 :root {
-  font-family: var(--font-family-base);
-  color: var(--color-text-primary);
-  background: var(--color-bg-page);
+  --ms-bg-void: #06080f;
+  --ms-bg-deep: #0b0f1a;
+  --ms-bg-panel: #0f1520;
+  --ms-bg-card: #141b28;
+  --ms-bg-hover: #1a2338;
+  --ms-border: #1e2d47;
+  --ms-border-bright: #2a4070;
+  --ms-gold: #c8960c;
+  --ms-gold-bright: #f0b429;
+  --ms-gold-dim: #7a5a08;
+  --ms-cyan: #00b4cc;
+  --ms-cyan-dim: #006a7a;
+  --ms-green: #2ecc71;
+  --ms-green-dim: #1a7a44;
+  --ms-red: #e74c3c;
+  --ms-amber: #f39c12;
+  --ms-text-primary: #d8e4f0;
+  --ms-text-secondary: #7a98b8;
+  --ms-text-dim: #3d5470;
+  --ms-mono: 'Share Tech Mono', monospace;
+  --ms-display: 'Orbitron', sans-serif;
+  --ms-body: 'Exo 2', sans-serif;
+
+  font-family: var(--ms-body);
+  color: var(--ms-text-primary);
+  background: var(--ms-bg-void);
 }
 
 * {
@@ -13,6 +37,11 @@
 body {
   margin: 0;
   min-height: 100vh;
+  background: var(--ms-bg-void);
+  color: var(--ms-text-primary);
+  background-image:
+    radial-gradient(ellipse at 20% 0%, rgb(0 100 180 / 6%) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 100%, rgb(200 150 12 / 4%) 0%, transparent 50%);
 }
 
 #root {
@@ -26,46 +55,132 @@ body {
 }
 
 .app-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-1) var(--space-1-5);
-  background: var(--color-bg-header);
-  border-bottom: 1px solid var(--color-border-subtle);
+  gap: 16px;
+  padding: 12px 24px;
+  background: var(--ms-bg-deep);
+  border-bottom: 1px solid var(--ms-border);
+  box-shadow: 0 2px 20px rgb(0 0 0 / 45%);
+}
+
+.app-brand {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
 }
 
 .app-header h1 {
   margin: 0;
-  font-size: 1.2rem;
+  font-family: var(--ms-display);
+  font-size: 1rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ms-gold-bright);
+}
+
+.app-brand-sub {
+  font-family: var(--ms-mono);
+  font-size: 0.7rem;
+  color: var(--ms-text-dim);
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .nav-links {
   list-style: none;
   display: flex;
-  gap: var(--space-1);
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
   margin: 0;
   padding: 0;
 }
 
 .nav-links a {
-  color: var(--color-link);
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  color: var(--ms-text-secondary);
   text-decoration: none;
-  font-weight: 500;
+  font-family: var(--ms-display);
+  font-size: 0.62rem;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  transition: border-color 0.15s, color 0.15s, background-color 0.15s;
+}
+
+.nav-links a:hover {
+  color: var(--ms-text-primary);
+  border-color: var(--ms-border);
+  background: rgb(26 35 56 / 35%);
 }
 
 .nav-links a.active {
-  color: var(--color-text-primary);
+  color: var(--ms-gold-bright);
+  border-color: var(--ms-border-bright);
+  background: rgb(200 150 12 / 10%);
 }
 
 .app-main {
-  width: min(var(--layout-content-width), 100%);
+  width: min(1800px, 100%);
   margin: 0 auto;
-  padding: var(--space-2) var(--space-1-5);
+  padding: 20px;
+}
+
+.app-main > section {
+  background: var(--ms-bg-panel);
+  border: 1px solid var(--ms-border);
+  border-radius: 4px;
+  padding: 18px;
+}
+
+.app-main > section h2 {
+  margin: 0 0 10px;
+  font-family: var(--ms-display);
+  font-size: 0.9rem;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+  color: var(--ms-gold);
+}
+
+.app-main > section p,
+.app-main > section a {
+  color: var(--ms-text-secondary);
 }
 
 .app-footer {
-  padding: var(--space-1) var(--space-1-5);
-  border-top: 1px solid var(--color-border-subtle);
-  color: var(--color-text-secondary);
+  padding: 12px 24px;
+  border-top: 1px solid var(--ms-border);
+  color: var(--ms-text-dim);
   text-align: center;
+  font-family: var(--ms-mono);
+  font-size: 0.72rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: var(--ms-bg-deep);
+}
+
+@media (max-width: 900px) {
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px 14px;
+  }
+
+  .nav-links {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .app-main {
+    padding: 14px;
+  }
 }
