@@ -1,0 +1,13 @@
+:root {
+  --font-family-base: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --color-text-primary: #f9f9f9;
+  --color-text-secondary: #95a1bb;
+  --color-link: #a6b6d8;
+  --color-bg-page: #0f1115;
+  --color-bg-header: #151922;
+  --color-border-subtle: #262d3d;
+  --layout-content-width: 960px;
+  --space-1: 1rem;
+  --space-1-5: 1.5rem;
+  --space-2: 2rem;
+}

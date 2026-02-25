@@ -13,7 +13,10 @@ export default function AppLayout() {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/about">About</NavLink>
+              <NavLink to="/eve-multisell">EVE Multisell</NavLink>
+            </li>
+            <li>
+              <NavLink to="/eve-orders">EVE Orders</NavLink>
             </li>
           </ul>
         </nav>
