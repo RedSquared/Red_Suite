@@ -435,9 +435,8 @@ export default function EveMultisellPage() {
           <div className="ms-sep" />
 
           <div className="ms-buyfrom-wrap">
-            <span className="ms-label ms-label-stack">
-              Bought From
-              <span className="ms-optional">(optional)</span>
+            <span className="ms-label">
+              Bought From <span className="ms-optional">(optional)</span>
             </span>
             <select
               className={buyFromStationId ? 'active' : ''}
